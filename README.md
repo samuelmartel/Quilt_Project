@@ -1,11 +1,16 @@
 # Quilt_Project
 
 Author: Sam Martel
+
 Email: samuelmartel.prof@gmail.com 
-project: Quilt Assesment
+
+Project: Quilt Assesment
+
 
 Language: Python 3.7 or above
+
 Required Packages: pillow, csv, math, sys
+
 Installing missing packages: pip3 install "package"
 
 Usage: python3 main.py "input".csv "output".jpg
@@ -13,6 +18,7 @@ Usage: python3 main.py "input".csv "output".jpg
 
 
 Description of Approach:
+
 Divide desired image into layers where each layer can only have one colour and is made up of squares located at the corners of the previous layer. Each layer is a defined as a class so that the values are contained within itself. When all layers are set the image can be constructed from the bottom up.
 
 The edge of the outmost square needs to be the edge of the image therefore the image must scale to fit these in without any white space around the edge.
