@@ -6,9 +6,9 @@ project: Quilt Assesment
 
 Language: Python 3.7 or above
 Required Packages: pillow, csv, math, sys
-Installing missing packages: pip3 install <package>
+Installing missing packages: pip3 install "<package>"
 
-Usage: python3 main.py <input>.csv <output>.jpg
+Usage: python3 main.py "<input>".csv "<output>".jpg
 
 
 
