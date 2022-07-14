@@ -10,6 +10,7 @@ import math
 import Layer
 import sys
 
+CONCAT_FLAG = False
 
 
 """
@@ -105,8 +106,7 @@ def construct_image(input, output):
     seed_values = open_csv(input)
     scale_values = get_scale_values(seed_values)
     colour_values = get_colour_values(seed_values)
-    """    if colour_values == -1:
-        return -1"""
+
     square_size = 1000
     image_size = scale_image(scale_values, square_size)
     
@@ -122,7 +122,39 @@ def construct_image(input, output):
     for i in layers:
         i.draw_layer(image)
 
+    new_image = tesselate_image(image, 2)
+    new_image.save("Quilted_image.jpg")
     image.save(output)
+
+    
+
+def tesselate_image(image, depth):
+    new_image = Image.new("RGB", (image.width + image.width, image.height + image.height), "white")
+    offset = int(image.width)
+
+    if(depth > 5):
+        print('I see you have chosen to stress test your PC.')
+        print('Please download Prime95 instead and use this program like a grown-up.')
+    else:
+        if(depth == 0):
+            return -1
+        elif(depth == 1):
+            new_image.paste(image, (0,0))
+            new_image.paste(image, (offset, 0))
+            new_image.paste(image, (0, offset))
+            new_image.paste(image, (offset, offset))
+            return new_image
+
+        elif(depth > 1):
+            new_image.paste(image, (0,0))
+            new_image.paste(image, (offset, 0))
+            new_image.paste(image, (0, offset))
+            new_image.paste(image, (offset, offset))
+
+            x_image = tesselate_image(new_image, depth-1)
+            return x_image
+
+
 
 """
 #Function:      Main function
@@ -131,18 +163,25 @@ def construct_image(input, output):
 """
 def main():
     args = sys.argv[1:]
+    CONCAT_FLAG = True
     try:
-        if(len(args) != 2):
+        if(len(args) > 3):
+            print('1')
             raise TypeError
         if(args[0] == "-h" or args[0] == "--h" or args[0] == "-help" or args[0] == "--help"):
             help_message()
             return
         if "." not in args[0] or "." not in args[1]:
+            print('2')
             raise TypeError
         if args[0].split(".")[1] != "csv":
+            print('3')
             raise TypeError
         if args[1].split(".")[1] != "jpg":
+            print('4')
             raise TypeError
+        if args[2] != "-c":
+            CONCAT_FLAG = False
 
         input = args[0]
         output = args[1]
@@ -154,10 +193,10 @@ def main():
         help_message()
         return
 
-    except TypeError:
+"""    except TypeError:
         print("Arguement Error: Incorrect arguements given")
         help_message()
-        return
+        return"""
 
 
 
